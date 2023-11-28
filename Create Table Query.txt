@@ -1,0 +1,38 @@
+1.CREATE Table register_admin_account(Name varchar(50)not null,Admin_UserName Varchar(50)Primary KEY not null,Email varchar(50) not null ,Phone int,Pass_Word varchar(50) not null)
+
+2.CREATE Table register_user_account(Name varchar(50)not null,User_UserName Varchar(50)Primary KEY not null,Email varchar(50) not null ,Phone int not null,Pass_Word varchar(50) not null,Admin_UserName varchar(50)not null,FOREIGN Key(Admin_UserName) REFERENCES register_admin_account(Admin_UserName));
+
+3.CREATE TABLE addinformation(RegID int not null, Name varchar(100) not null, FatherName varchar(100)not null, DateofBirth date not null, NIDNo int not null, Gender varchar(100) not null, BloodGroup varchar(100) not null, Address varchar(100) not null, ContactNumber int not null, Nationality varchar(100) not null, User_UserName varchar(100) not null, 
+PRIMARY KEY (RegID,Name,NIDNo,ContactNumber,User_UserName),
+FOREIGN Key(User_UserName) REFERENCES register_user_account(User_UserName) );
+
+
+
+
+query:
+
+select u.Name,u.User_UserName,u.Email,u.Phone,u.Admin_UserName from register_user_account as u Inner Join register_admin_account as a on u.Admin_UserName=a.Admin_UserName;
+
+add pep info list:
+select d.RegID,d.Name,d.FatherName,d.DateofBirth,d.NIDNo,d.Gender,d.BloodGroup,d.Address,d.ContactNumber,d.Nationality,d.User_UserName from addinformation as d Inner join register_user_account as u on d.User_UserName=u.User_UserName Inner Join register_admin_account as a on u.Admin_UserName=a.Admin_UserName and a.Admin_UserName="badhon01";
+
+
+Delete Regstered People Info:
+DELETE FROM `addinformation` WHERE addinformation.RegID In (SELECT addinformation.RegID FROM addinformation INNER JOIN `register_user_account` On addinformation.User_UserName = register_user_account.User_UserName WHERE addinformation.RegID="4" )
+
+
+
+
+or :
+select d.RegID,d.Name,d.FatherName,d.DateofBirth,d.NIDNo,d.Gender,d.BloodGroup,d.Address,d.ContactNumber,d.Nationality,d.User_UserName,u.User_UserName,u.Admin_UserName,a.Admin_UserName from addinformation as d Inner join register_user_account as u on d.User_UserName=u.User_UserName Inner Join register_admin_account as a on u.Admin_UserName=a.Admin_UserName
+
+
+General_User_Information_List:
+select u.Name,u.User_UserName,u.Email,u.Phone,u.Admin_UserName from register_user_account as u Inner Join register_admin_account as a on u.Admin_UserName=a.Admin_UserName;
+
+
+Under a Registerd General USer people nformation list:
+select d.RegID,d.Name,d.FatherName,d.DateofBirth,d.NIDNo,d.Gender,d.BloodGroup,d.Address,d.ContactNumber,d.Nationality,d.User_UserName from addinformation as d Inner join register_user_account as u on d.User_UserName=u.User_UserName and u.User_UserName='kazle01' 
+
+
+
